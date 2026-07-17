@@ -1,3 +1,5 @@
+﻿import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -14,9 +16,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="OS Reports API", version="1.0.0", lifespan=lifespan)
 
+frontend_url = os.getenv("FRONTEND_URL")
+allow_origins = [frontend_url] if frontend_url else ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # tighten to the deployed frontend origin once live
+    allow_origins=allow_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
