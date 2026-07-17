@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>OS Reports — Insurance Document Autofill</title>
+<title>OS Reports â€” Insurance Document Autofill</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -246,12 +246,12 @@
 
 <script>
 /* ============================================================
-   OS Reports — configuration
+   OS Reports â€” configuration
    Change API_BASE to your deployed backend URL after Railway deploy.
    ============================================================ */
 const API_BASE = window.location.hostname === "localhost"
   ? "http://localhost:8000/api"
-  : "https://REPLACE-WITH-YOUR-BACKEND.up.railway.app/api";
+  : "https://helpful-charisma-production-0fa2.up.railway.app/api";
 
 /* ============================================================
    Tiny state + helpers
@@ -293,7 +293,7 @@ async function api(path, { method="GET", body, isForm=false } = {}){
 
   if (res.status === 401) {
     logout();
-    throw new Error("Session expired — please sign in again.");
+    throw new Error("Session expired â€” please sign in again.");
   }
   let data = null;
   try { data = await res.json(); } catch(e) {}
@@ -401,14 +401,14 @@ function renderAuth(){
           </div>
           <div class="form-row">
             <label class="field-label">Password</label>
-            <input type="password" name="password" placeholder="••••••••" required minlength="6" />
+            <input type="password" name="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required minlength="6" />
           </div>
           <button type="submit" class="btn btn-primary btn-full" id="auth-submit">
             ${authMode === "login" ? "Sign in" : "Create account"}
           </button>
         </form>
       </div>
-      <p style="text-align:center;font-size:12px;color:var(--ink-soft);margin-top:16px;">OS2 Studio internal tool · insurance document autofill</p>
+      <p style="text-align:center;font-size:12px;color:var(--ink-soft);margin-top:16px;">OS2 Studio internal tool Â· insurance document autofill</p>
     </div>
   </div>`;
 }
@@ -424,7 +424,7 @@ function bindAuthEvents(){
     const payload = Object.fromEntries(fd.entries());
     const submitBtn = document.getElementById("auth-submit");
     submitBtn.disabled = true;
-    submitBtn.textContent = "Please wait…";
+    submitBtn.textContent = "Please waitâ€¦";
     document.getElementById("auth-error").innerHTML = "";
     try {
       const data = await api(`/auth/${authMode === "login" ? "login" : "register"}`, { method: "POST", body: payload });
@@ -585,10 +585,10 @@ function renderOverview(){
       <p>Org-wide snapshot across every user's reports.</p>
     </div>
     <div class="stat-grid">
-      <div class="stat-card accent"><div class="stat-value">${s.total_reports ?? "—"}</div><div class="stat-label">Total reports</div></div>
-      <div class="stat-card"><div class="stat-value">${s.reports_pending_review ?? "—"}</div><div class="stat-label">Needs review</div></div>
-      <div class="stat-card"><div class="stat-value">${s.reports_completed ?? "—"}</div><div class="stat-label">Completed</div></div>
-      <div class="stat-card"><div class="stat-value">${s.total_users ?? "—"}</div><div class="stat-label">Team members</div></div>
+      <div class="stat-card accent"><div class="stat-value">${s.total_reports ?? "â€”"}</div><div class="stat-label">Total reports</div></div>
+      <div class="stat-card"><div class="stat-value">${s.reports_pending_review ?? "â€”"}</div><div class="stat-label">Needs review</div></div>
+      <div class="stat-card"><div class="stat-value">${s.reports_completed ?? "â€”"}</div><div class="stat-label">Completed</div></div>
+      <div class="stat-card"><div class="stat-value">${s.total_users ?? "â€”"}</div><div class="stat-label">Team members</div></div>
     </div>
     <div class="card card-pad" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
       <div>
@@ -604,7 +604,7 @@ function bindOverviewEvents(){
 }
 
 /* ============================================================
-   DASHBOARD (reports list — role aware)
+   DASHBOARD (reports list â€” role aware)
    ============================================================ */
 function renderDashboard(){
   let reports = state.reports;
@@ -641,7 +641,7 @@ function renderDashboard(){
         <div class="report-icon">${ICON.doc}</div>
         <div class="report-meta">
           <div class="report-name">${r.name}</div>
-          <div class="report-date">${fmtDate(r.created_at)} · ${r.documents.length} document${r.documents.length===1?'':'s'}</div>
+          <div class="report-date">${fmtDate(r.created_at)} Â· ${r.documents.length} document${r.documents.length===1?'':'s'}</div>
         </div>
         ${isStaff() && r.owner_name ? `<span class="owner-chip">${r.owner_name}</span>` : ""}
         ${statusBadge(r.status)}
@@ -675,7 +675,7 @@ function renderTemplates(){
       <div class="dropzone" id="tpl-dropzone">
         ${ICON.upload}
         <div class="dropzone-title">Drop a .docx template here</div>
-        <div class="dropzone-sub">or click to browse — placeholders are detected on upload</div>
+        <div class="dropzone-sub">or click to browse â€” placeholders are detected on upload</div>
         <input type="file" id="tpl-file" accept=".docx" class="hidden" />
       </div>
       <div id="tpl-file-preview"></div>
@@ -724,7 +724,7 @@ function bindTemplatesEvents(){
     if (!name){ toast("Give the template a name first", "error"); return; }
     if (!selectedFile){ toast("Choose a .docx file", "error"); return; }
     uploadBtn.disabled = true;
-    uploadBtn.innerHTML = `<div class="spinner on-dark"></div> Reading template…`;
+    uploadBtn.innerHTML = `<div class="spinner on-dark"></div> Reading templateâ€¦`;
     try {
       const fd = new FormData();
       fd.append("name", name);
@@ -754,7 +754,7 @@ function renderUsers(){
         <div class="user-avatar" style="background:var(--amber);color:var(--amber-ink);">${initials(u.full_name)}</div>
         <div class="user-row-meta">
           <div class="user-row-name">${u.full_name}</div>
-          <div class="user-row-email">${u.email} · ${u.report_count} report${u.report_count===1?'':'s'}</div>
+          <div class="user-row-email">${u.email} Â· ${u.report_count} report${u.report_count===1?'':'s'}</div>
         </div>
         ${rolePill(u.role)}
         <select class="role-select" data-user-id="${u.id}" ${u.id === state.user.id ? 'disabled title="You cannot change your own role"' : ''}>
@@ -804,7 +804,7 @@ function stepper(){
   return `<div class="stepper">${labels.map((l,i) => {
     const n = i+1;
     const cls = n < newReportState.step ? "done" : (n === newReportState.step ? "active" : "");
-    return `<div class="step-pill ${cls}"><div class="step-num">${n < newReportState.step ? "✓" : n}</div>${l}</div>` + (i < labels.length-1 ? `<div class="step-connector"></div>` : "");
+    return `<div class="step-pill ${cls}"><div class="step-num">${n < newReportState.step ? "âœ“" : n}</div>${l}</div>` + (i < labels.length-1 ? `<div class="step-connector"></div>` : "");
   }).join("")}</div>`;
 }
 
@@ -820,7 +820,7 @@ function renderWizardStep(){
         <div class="card"><div class="empty-state">
           ${ICON.templates}
           <div style="font-weight:600;color:var(--ink);margin-bottom:6px;">No templates yet</div>
-          <div style="font-size:13px;margin-bottom:16px;">Upload a template first — its placeholders become the fields we extract.</div>
+          <div style="font-size:13px;margin-bottom:16px;">Upload a template first â€” its placeholders become the fields we extract.</div>
           <button class="btn btn-primary" data-nav="templates">Upload a template</button>
         </div></div>
       ` : `
@@ -830,14 +830,14 @@ function renderWizardStep(){
               <input type="radio" name="tpl-pick" value="${t.id}" style="width:16px;height:16px;" />
               <div style="flex:1;">
                 <div style="font-weight:600;font-size:14px;">${t.name}</div>
-                <div style="font-size:12px;color:var(--ink-soft);">${t.fields.length} fields detected · ${t.original_filename}</div>
+                <div style="font-size:12px;color:var(--ink-soft);">${t.fields.length} fields detected Â· ${t.original_filename}</div>
               </div>
             </label>
           `).join("")}
         </div>
         <div class="form-row" style="margin-top:20px;">
           <label class="field-label">Report name</label>
-          <input type="text" id="report-name" placeholder="e.g. Rajesh Kumar — Motor Claim, July 2026" />
+          <input type="text" id="report-name" placeholder="e.g. Rajesh Kumar â€” Motor Claim, July 2026" />
         </div>
         <button class="btn btn-primary" id="wizard-next-1">Continue</button>
       `}
@@ -861,13 +861,13 @@ function renderWizardStep(){
 
   else if (newReportState.step === 2){
     outlet.innerHTML = `
-      <div class="page-head"><h1>Upload documents</h1><p>Policy documents, medical bills, ID cards, claim forms — drop them all in, mixed together.</p></div>
+      <div class="page-head"><h1>Upload documents</h1><p>Policy documents, medical bills, ID cards, claim forms â€” drop them all in, mixed together.</p></div>
       ${stepper()}
       <div class="card card-pad">
         <div class="dropzone" id="doc-dropzone">
           ${ICON.upload}
           <div class="dropzone-title">Drop documents here</div>
-          <div class="dropzone-sub">PDF, JPG, PNG — as many as this claim needs</div>
+          <div class="dropzone-sub">PDF, JPG, PNG â€” as many as this claim needs</div>
           <input type="file" id="doc-file" accept=".pdf,.jpg,.jpeg,.png,.webp" multiple class="hidden" />
         </div>
         <div id="doc-file-list"></div>
@@ -897,7 +897,7 @@ function renderWizardStep(){
         <div class="file-row">
           <div class="file-icon">${(f.name.split('.').pop()||'').slice(0,4).toUpperCase()}</div>
           <div class="file-name">${f.name}</div>
-          <button class="file-remove" data-remove="${i}">×</button>
+          <button class="file-remove" data-remove="${i}">Ã—</button>
         </div>
       `).join("");
       box.querySelectorAll("[data-remove]").forEach(b => b.addEventListener("click", () => {
@@ -909,7 +909,7 @@ function renderWizardStep(){
 
     document.getElementById("wizard-back-2").addEventListener("click", () => { newReportState.step = 1; renderWizardStep(); });
     nextBtn.addEventListener("click", async () => {
-      nextBtn.disabled = true; nextBtn.innerHTML = `<div class="spinner on-dark"></div> Uploading…`;
+      nextBtn.disabled = true; nextBtn.innerHTML = `<div class="spinner on-dark"></div> Uploadingâ€¦`;
       try {
         const fd = new FormData();
         newReportState.files.forEach(f => fd.append("files", f));
@@ -933,8 +933,8 @@ function renderReportDetail(){
   if (r.status === "draft" || r.status === "extracting"){
     body = `
       <div class="scan-card">
-        <div class="scan-title">${r.status === "draft" ? "Waiting to start" : "Reading your documents…"}</div>
-        <div class="scan-sub">${r.documents.length} document${r.documents.length===1?'':'s'} · Gemini extraction</div>
+        <div class="scan-title">${r.status === "draft" ? "Waiting to start" : "Reading your documentsâ€¦"}</div>
+        <div class="scan-sub">${r.documents.length} document${r.documents.length===1?'':'s'} Â· Gemini extraction</div>
         <div class="scan-doc-list">
           ${r.documents.map(d => `
             <div class="scan-doc-row">
@@ -961,7 +961,7 @@ function renderReportDetail(){
                 <span class="field-name">${key.replace(/_/g," ")}</span>
                 <span class="source-chip ${!v.source ? 'empty' : ''}">${v.source || "not found"}</span>
               </div>
-              <input type="text" data-field-key="${key}" value="${v.value ? String(v.value).replace(/"/g,'&quot;') : ''}" placeholder="—" />
+              <input type="text" data-field-key="${key}" value="${v.value ? String(v.value).replace(/"/g,'&quot;') : ''}" placeholder="â€”" />
             </div>
           `).join("")}
         </div>
@@ -986,7 +986,7 @@ function renderReportDetail(){
     <div class="page-head" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
       <div>
         <h1>${r.name}</h1>
-        <p>${fmtDate(r.created_at)}${r.owner_name && isStaff() ? " · " + r.owner_name : ""}</p>
+        <p>${fmtDate(r.created_at)}${r.owner_name && isStaff() ? " Â· " + r.owner_name : ""}</p>
       </div>
       ${statusBadge(r.status)}
     </div>
@@ -998,7 +998,7 @@ function bindReportDetailEvents(){
   const genBtn = document.getElementById("generate-btn");
   if (genBtn){
     genBtn.addEventListener("click", async () => {
-      genBtn.disabled = true; genBtn.innerHTML = `<div class="spinner on-dark"></div> Generating…`;
+      genBtn.disabled = true; genBtn.innerHTML = `<div class="spinner on-dark"></div> Generatingâ€¦`;
       const fields = {};
       document.querySelectorAll("[data-field-key]").forEach(inp => { fields[inp.dataset.fieldKey] = inp.value; });
       try {
