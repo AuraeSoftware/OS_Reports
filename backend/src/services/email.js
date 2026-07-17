@@ -13,7 +13,7 @@ async function sendMagicLink(email, link) {
     console.log(`[dev] Magic link for ${email}: ${link}`);
     return;
   }
-  await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM_ADDRESS,
     to: email,
     subject: "Your OS Reports sign-in link",
@@ -28,6 +28,10 @@ async function sendMagicLink(email, link) {
       </div>
     `,
   });
+  if (error) {
+    console.error("Resend error:", error);
+    throw new Error(error.message || "Failed to send sign-in email");
+  }
 }
 
 module.exports = { sendMagicLink };

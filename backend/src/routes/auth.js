@@ -32,7 +32,12 @@ router.post("/request-link", async (req, res) => {
 
   const backendUrl = process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
   const link = `${backendUrl}/api/auth/verify?token=${token}`;
-  await sendMagicLink(email, link);
+
+  try {
+    await sendMagicLink(email, link);
+  } catch (err) {
+    return res.status(502).json({ detail: `Could not send sign-in email: ${err.message}` });
+  }
 
   res.json({ ok: true, message: "Check your email for a sign-in link" });
 });
